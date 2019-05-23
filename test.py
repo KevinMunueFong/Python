@@ -3,7 +3,11 @@
 # title            :menu.py
 # description     :This program displays an interactive menu on CLI
 # author          :Kevin Fong
+<<<<<<< HEAD
 # date            :19 May 2019
+=======
+# date            :21 May 2019
+>>>>>>> d7dac3f12f8a54a2ac37a426126ecae5fca0e193
 # version          :0.1
 # usage           :python menu.py
 # notes           :
@@ -158,6 +162,7 @@ def ping_all_trains():
 def ping_selected_train():
     os.system('clear')
 
+<<<<<<< HEAD
     login = "ha01"
     psswd = "wifiBART07"
 
@@ -169,23 +174,51 @@ def ping_selected_train():
         l.expect("$")
         global global_pexpect_instance
         global_pexpect_instance = l
+=======
+    login = "matrail@10.99.99.1"
+    psswd = "wifiBART07"
+
+    with suppress_stdout():
+        l = pexpect.spawn("ssh " + login)
+        l.expect(["matrail@10.99.99.1\'s password:", pexpect.EOF])
+        l.sendline(psswd)
+    l.expect("$")
+    global global_pexpect_instance
+    global_pexpect_instance = l
+>>>>>>> d7dac3f12f8a54a2ac37a426126ecae5fca0e193
 
     with open('ipList.csv') as fobj:
         text = fobj.read().strip().split()
         while True:
             try:
+<<<<<<< HEAD
                 lb = "127.0.0.1"
                 s = input("Enter MIG number: ")
                 if s == "":
                     continue
                 if s in text:
                     pr = os.system("ping -c 1 " + lb)
+=======
+                s = input("Enter IP address: ")
+                if s == "":
+                    continue
+                if s in text:
+                    pr = l.sendline("ping -c 1 " + s)
+>>>>>>> d7dac3f12f8a54a2ac37a426126ecae5fca0e193
                     if pr == 0:
                         print("Host is Up")
                     else:
                         print("Host is Down")
+<<<<<<< HEAD
                     break
                 raise Exception("Host invalid, try again")
+=======
+                    l.expect("$")
+                    l.sendline("exit")
+                    l.interact()
+                    break
+                raise Exception("IP address invalid, try again")
+>>>>>>> d7dac3f12f8a54a2ac37a426126ecae5fca0e193
             except Exception as e:
                 print(e)
 
